@@ -7,6 +7,7 @@ import android.content.Context
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.PersistableBundle
+import codelab.android.library.testjobschedulers.evernote.EvernoteJob
 import codelab.android.library.testjobschedulers.jobscheduler.JobSchedulerService
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.concurrent.TimeUnit
@@ -24,6 +25,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun initListener() {
         button_job_scheduler.setOnClickListener { executeJobScheduler() }
+
+        button_evernote.setOnClickListener { executeEvernote() }
+    }
+
+    private fun executeEvernote() {
+        EvernoteJob.scheduleJob()
     }
 
     private fun executeJobScheduler() {

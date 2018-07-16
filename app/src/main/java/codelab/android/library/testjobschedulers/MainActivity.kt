@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun executeEvernote() {
-        EvernoteJob.scheduleJob()
+        EvernoteJob.scheduleJob("bundle_value")
     }
 
     private fun executeJobScheduler() {

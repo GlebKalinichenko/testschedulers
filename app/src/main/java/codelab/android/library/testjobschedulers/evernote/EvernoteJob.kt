@@ -6,30 +6,37 @@ import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
 import android.support.v4.app.NotificationCompat
-import android.widget.Toast
 import codelab.android.library.testjobschedulers.R
 import com.evernote.android.job.Job
 import com.evernote.android.job.JobRequest
 import java.util.concurrent.TimeUnit
+import com.evernote.android.job.util.support.PersistableBundleCompat
 
 class EvernoteJob : Job() {
 
     companion object {
+        fun scheduleJob(value: String) {
+            val extras = PersistableBundleCompat()
+            extras.putString("bundle_key", value)
 
-        fun scheduleJob() {
             JobRequest.Builder("EvernoteJob")
                     // interval
                     .setPeriodic(TimeUnit.MINUTES.toMillis(15))
                     // update current tasks
                     .setUpdateCurrent(true)
+                    // set charging mode
+                    .setRequiresCharging(true)
+                    // set idle model
+                    .setRequiresDeviceIdle(false)
+                    // set bundle params
+                    .setExtras(extras)
                     .build()
                     .schedule()
         }
-
     }
 
     override fun onRunJob(params: Params): Result {
-        showNotification("Ololo", "Ololo")
+        showNotification("Title", params.extras.getString("bundle_key", ""))
         return Result.SUCCESS
     }
 

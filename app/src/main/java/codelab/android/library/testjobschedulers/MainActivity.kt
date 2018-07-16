@@ -11,6 +11,11 @@ import codelab.android.library.testjobschedulers.evernote.EvernoteJob
 import codelab.android.library.testjobschedulers.jobscheduler.JobSchedulerService
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.concurrent.TimeUnit
+import com.firebase.jobdispatcher.GooglePlayDriver
+import com.firebase.jobdispatcher.FirebaseJobDispatcher
+import android.support.design.widget.CoordinatorLayout.Behavior.setTag
+import codelab.android.library.testjobschedulers.firebase.FirebaseJobService
+
 
 class MainActivity : AppCompatActivity() {
     val jobSchedulerId = 1
@@ -27,6 +32,19 @@ class MainActivity : AppCompatActivity() {
         button_job_scheduler.setOnClickListener { executeJobScheduler() }
 
         button_evernote.setOnClickListener { executeEvernote() }
+
+        button_firebase.setOnClickListener { executeFirebase() }
+    }
+
+    private fun executeFirebase() {
+        val dispatcher = FirebaseJobDispatcher(GooglePlayDriver(applicationContext))
+
+        val myJob = dispatcher.newJobBuilder()
+                .setService(FirebaseJobService::class.java)
+                .setTag("firebase_job")
+                .build()
+
+        dispatcher.mustSchedule(myJob)
     }
 
     private fun executeEvernote() {

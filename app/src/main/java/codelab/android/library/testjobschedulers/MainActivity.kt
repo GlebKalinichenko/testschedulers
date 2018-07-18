@@ -15,6 +15,7 @@ import com.firebase.jobdispatcher.GooglePlayDriver
 import com.firebase.jobdispatcher.FirebaseJobDispatcher
 import android.support.design.widget.CoordinatorLayout.Behavior.setTag
 import codelab.android.library.testjobschedulers.firebase.FirebaseJobService
+import com.firebase.jobdispatcher.Constraint
 
 
 class MainActivity : AppCompatActivity() {
@@ -42,6 +43,8 @@ class MainActivity : AppCompatActivity() {
         val myJob = dispatcher.newJobBuilder()
                 .setService(FirebaseJobService::class.java)
                 .setTag("firebase_job")
+                .setReplaceCurrent(true)
+                .setConstraints(Constraint.ON_ANY_NETWORK)
                 .build()
 
         dispatcher.mustSchedule(myJob)

@@ -36,7 +36,7 @@ class EvernoteJob : Job() {
     }
 
     override fun onRunJob(params: Params): Result {
-        showNotification("Title", params.extras.getString("bundle_key", ""))
+        showNotification("Title Evernote", params.extras.getString("bundle_key", ""))
         return Result.SUCCESS
     }
 
